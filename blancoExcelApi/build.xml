@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="blancoExcelApi" default="build" basedir=".">
+	<!-- blancoAnt(0.2.1)により自動生成されました。 (2011/10/17) -->
+
+	<target name="build" depends="compile,jar,pack" />
+
+	<property name="version" value="0.0.6" />
+
+	<property name="project" value="blancoExcelApi" />
+	<property name="project.lower" value="blancoexcelapi" />
+	<property name="project.zip" value="${project}-${version}-src.zip" />
+	<property name="project.main.jar" value="blancoexcelapi-${version}.jar" />
+
+	<property name="encoding" value="UTF-8" />
+	<property name="eclipse.dir" value="C:/Program Files/eclipse" />
+
+	<!-- Antタスク定義 begin -->
+
+	<!-- Antタスク定義 end -->
+
+	<target name="pack">
+		<echo>packing project</echo>
+		<delete file="${project.zip}" />
+		<delete dir="bin" />
+		<delete dir="javadoc" />
+
+		<delete dir="tmp" />
+
+		<copy todir="lib">
+			<fileset dir=".">
+				<include name="${project.lower}-*.jar" />
+			</fileset>
+		</copy>
+
+		<delete>
+			<fileset dir=".">
+				<include name="${project.lower}-*.jar" />
+			</fileset>
+		</delete>
+
+		<zip destfile="${project.zip}">
+			<zipfileset dir="." prefix="${project}" excludes="${project.zip},**/*.class" />
+		</zip>
+
+	</target>
+
+	<target name="jar">
+		<echo>building jar</echo>
+
+		<delete file="${project.main.jar}" />
+		<jar destfile="${project.main.jar}">
+			<zipfileset dir="doc" prefix="doc" />
+			<!-- classの取り込み -->
+			<zipfileset dir="bin" includes="**/*" />
+			<!-- Javaソースコード(通常)の取り込み -->
+			<zipfileset dir="src" includes="**/*" prefix="src" />
+		</jar>
+	</target>
+
+	<target name="compile">
+		<delete dir="bin" />
+		<mkdir dir="bin" />
+		<javac destdir="bin" debug="true" source="1.5" target="1.5" fork="false" encoding="${encoding}">
+			<src path="src/" />
+			<classpath>
+				<!-- ワイルドカードで一括取り込み -->
+				<fileset dir="lib" includes="*.jar" />
+				<fileset dir="lib/jexcelapi" includes="*.jar" />
+				<fileset dir="lib/poi" includes="*.jar" />
+			</classpath>
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+	<target name="javadoc">
+		<echo>JavaDocを生成します。</echo>
+		<delete dir="javadoc" />
+		<javadoc destdir="javadoc" encoding="${encoding}">
+			<fileset dir="src" includes="**/*.java" />
+			<classpath>
+				<fileset dir="lib" includes="*.jar" />
+			</classpath>
+		</javadoc>
+	</target>
+
+</project>
