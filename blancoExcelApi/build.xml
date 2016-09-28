@@ -4,7 +4,7 @@
 
 	<target name="build" depends="compile,jar,pack" />
 
-	<property name="version" value="0.0.6" />
+	<property name="version" value="0.0.7" />
 
 	<property name="project" value="blancoExcelApi" />
 	<property name="project.lower" value="blancoexcelapi" />

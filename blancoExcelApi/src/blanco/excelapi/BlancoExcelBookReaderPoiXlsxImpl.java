@@ -50,6 +50,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -101,8 +102,7 @@ class BlancoExcelBookReaderPoiXlsxImpl implements BlancoExcelBookReader {
 		currentSheet = workbook.getSheetAt(sheetNo);
 
 		if (currentSheet == null) {
-			throw new IOException("Specified sheet number [" + sheetNo
-					+ "] is not exist.");
+			throw new IOException("Specified sheet number [" + sheetNo + "] is not exist.");
 		}
 	}
 
@@ -111,8 +111,7 @@ class BlancoExcelBookReaderPoiXlsxImpl implements BlancoExcelBookReader {
 		currentSheet = workbook.getSheet(sheetName);
 
 		if (currentSheet == null) {
-			throw new IOException("Specified sheet [" + sheetName
-					+ "] is not exist.");
+			throw new IOException("Specified sheet [" + sheetName + "] is not exist.");
 		}
 	}
 
@@ -129,15 +128,14 @@ class BlancoExcelBookReaderPoiXlsxImpl implements BlancoExcelBookReader {
 	}
 
 	static String getTextInner(final Cell cell) throws IOException {
-		if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+		if (cell.getCellTypeEnum() == CellType.STRING) {
 			return cell.getStringCellValue();
-		} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+		} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
 			if (DateUtil.isCellDateFormatted(cell)) {
 				// 日本時間まで強制的に ずらします。
 				// cal.add(Calendar.SECOND, -getDefaultTzOffsetSeconds());
 
-				final SimpleDateFormat sdf = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss");
+				final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				return sdf.format(cell.getDateCellValue());
 			} else {
 				return String.valueOf(cell.getNumericCellValue());

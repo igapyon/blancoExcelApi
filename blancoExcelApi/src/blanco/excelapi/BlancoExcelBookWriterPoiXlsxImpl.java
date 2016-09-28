@@ -51,6 +51,7 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -242,9 +243,9 @@ class BlancoExcelBookWriterPoiXlsxImpl implements BlancoExcelBookWriter {
 			newRow = currentSheet.createRow(row);
 		}
 
-		final Cell cell = newRow.createCell(column, row);
+		final Cell cell = newRow.createCell(column);
 		cell.setCellStyle(getCellStyle(templateCellColumn, templateCellRow));
-		cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+		cell.setCellType(CellType.NUMERIC);
 		cell.setCellValue(value);
 	}
 
@@ -265,9 +266,9 @@ class BlancoExcelBookWriterPoiXlsxImpl implements BlancoExcelBookWriter {
 			newRow = currentSheet.createRow(row);
 		}
 
-		final Cell cell = newRow.createCell(column, row);
+		final Cell cell = newRow.createCell(column);
 		cell.setCellStyle(getCellStyle(templateCellColumn, templateCellRow));
-		cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+		cell.setCellType(CellType.NUMERIC);
 		cell.setCellValue(value);
 	}
 
